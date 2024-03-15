@@ -45,6 +45,8 @@ const activityColors = {
     const hasLocationData = data.location && Object.keys(data.location).length > 0;
     const hasDateData = data.date && Object.keys(data.date).length > 0;
     const hasActivityByLocationData = data.activityByLocation && Object.keys(data.activityByLocation).length > 0;
+    const hasDateByMonthData = data.dateByMonth && Object.keys(data.dateByMonth).length > 0;
+    const hasDateByYearData = data.dateByYear && Object.keys(data.dateByYear).length > 0;
   
     // Function to generate a random color
     const generateRandomColor = () => {
@@ -101,6 +103,22 @@ const activityColors = {
       };
     };
 
+    const generateChartDataForDate = () => {
+      const labels = Object.keys(data.date).sort(); // Labels are now in YYYY-MM format
+      const dataPoints = labels.map(label => data.date[label]);
+  
+      return {
+        labels,
+        datasets: [{
+          label: 'Number of People by Month',
+          data: dataPoints,
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+        }],
+      };
+    };
+
     const generatePieChartData = () => {
         const activities = Object.keys(data.activity);
         const counts = Object.values(data.activity);
@@ -116,6 +134,38 @@ const activityColors = {
           }],
         };
       };
+
+      const generateChartDataForDateByMonth = () => {
+        const labels = Object.keys(data.dateByMonth).sort(); // Ensure sorting for chronological order
+        const dataPoints = labels.map(label => data.dateByMonth[label]);
+    
+        return {
+          labels,
+          datasets: [{
+            label: 'Number of People by Month',
+            data: dataPoints,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          }],
+        };
+      };
+    
+      const generateChartDataForDateByYear = () => {
+        const labels = Object.keys(data.dateByYear).sort(); // Ensure sorting for chronological order
+        const dataPoints = labels.map(label => data.dateByYear[label]);
+    
+        return {
+          labels,
+          datasets: [{
+            label: 'Number of People by Year',
+            data: dataPoints,
+            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1,
+          }],
+        };
+      };
   
       return (
         <div className="flex flex-wrap justify-center -mx-2">
@@ -127,6 +177,19 @@ const activityColors = {
               </div>
             </div>
           )}
+           {hasDateByMonthData && (
+        <div className="w-full md:w-1/2 p-2">
+          <h1 className="text-center font-bold">Number of People by Month</h1>
+          <Bar data={generateChartDataForDateByMonth()} options={{ scales: { y: { beginAtZero: true } } }} />
+        </div>
+      )}
+      
+      {hasDateByYearData && (
+        <div className="w-full md:w-1/2 p-2">
+          <h1 className="text-center font-bold">Number of People by Year</h1>
+          <Bar data={generateChartDataForDateByYear()} options={{ scales: { y: { beginAtZero: true } } }} />
+        </div>
+      )}
           {hasActivityData && (
             <div className="w-full md:w-1/2 p-2">
               <h1 className="text-center font-bold">Number of People by Activity</h1>
@@ -141,9 +204,17 @@ const activityColors = {
           )}
           {hasDateData && (
             <div className="w-full md:w-1/2 p-2">
-              <h1 className="text-center font-bold">Number of People by Date</h1>
-              <Bar data={generateChartData(Object.keys(data.date).sort(), 'Number of People by Date', Object.values(data.date))} options={{ scales: { y: { beginAtZero: true }, x: { type: 'time', time: { unit: 'day' }, title: { display: true, text: 'Date' }, ticks: { source: 'labels' } } } }} />
-            </div>
+            <h1 className="text-center font-bold">Number of People by Month</h1>
+            <Bar data={generateChartDataForDate()} options={{ 
+              scales: { 
+                y: { beginAtZero: true }, 
+                x: { 
+                  type: 'category', // Change to 'category' since we're using YYYY-MM labels
+                  title: { display: true, text: 'Month' }
+                } 
+              } 
+            }} />
+          </div>
           )}
           {hasActivityByLocationData && (
             <div className="w-full md:w-1/2 p-2">
