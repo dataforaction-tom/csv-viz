@@ -4,7 +4,7 @@ import Charts from './Charts';
 import { parse, format, isValid } from 'date-fns';
 
 function App() {
-  const [parsedData, setParsedData] = useState({ activity: {}, ageRange: {}, gender: {}, location: {} });
+  const [parsedData, setParsedData] = useState({ activity: {}, ageRange: {}, gender: {}, location: {}, typeOfInsight: {}, postcode: {}});
 
   const processDataForCharts = (data) => {
     console.log("Raw data:", data); // Debugging raw data
@@ -12,16 +12,22 @@ function App() {
     const chartsData = {
       activity: {},
       location: {},
-      date: {}, // This will now aggregate by month
-      activityByLocation: {}, // New structure for activity by location
+      date: {}, 
+      activityByLocation: {}, 
       dateByYear: {},
       dateByMonth: {},
+      typeOfInsight: {},
+      postcode: {},
+      ageRange: {}
     };
 
-    const dateFormats = ["dd-MM-yyyy", "yyyy-MM-dd", "MM/dd/yyyy"]; // Add more formats as necessary
+    const dateFormats = ["dd/MM/yyyy", "dd-MM-yyyy", "d/M/yyyy",
+    "MM/dd/yyyy", "MM-dd-yyyy", "M/d/yyyy",
+    "yyyy/MM/dd", "yyyy-MM-dd", "yyyy/M/d",
+    "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss a", "yyyy-MM-dd'T'HH:mm:ss",]; 
   
     data.forEach((item) => {
-      const { Activity: activity, 'Local authority Name': location, 'Number of people': count, Date: dateStr } = item;
+      const { Activity: activity, 'Local authority Name': location, 'Number of people': count, Date: dateStr, 'Type of insight': typeOfInsight, Postcode: postcode, 'Age Range': ageRange,  } = item;
       console.log("Date string:", dateStr);
 
       let parsedDate;
@@ -36,7 +42,7 @@ function App() {
 
       if (!isValidDate) {
         console.error('Invalid date format for:', dateStr);
-        return; // Skip this item or handle invalid date as necessary
+        return; 
       }
 
       console.log(parsedDate);
@@ -47,6 +53,12 @@ function App() {
   
       // Aggregate data for location
       chartsData.location[location] = (chartsData.location[location] || 0) + parseInt(count, 10);
+
+      // Aggregate data for Type of Insight
+      chartsData.typeOfInsight[typeOfInsight] = (chartsData.typeOfInsight[typeOfInsight] || 0) + parseInt(count, 10);
+
+      // Aggregate data for Age Range
+      chartsData.ageRange[ageRange] = (chartsData.ageRange[ageRange] || 0) + parseInt(count, 10);
   
      // For month aggregation
     const yearMonth = format(parsedDate, "yyyy-MM"); // Extracts YYYY-MM for aggregation
@@ -56,7 +68,7 @@ function App() {
     const year = format(parsedDate, "yyyy");
     chartsData.dateByYear[year] = (chartsData.dateByYear[year] || 0) + parseInt(count, 10);
   
-      // Aggregate data for activity by location (no change needed here)
+      // Aggregate data for activity by location 
       if (!chartsData.activityByLocation[activity]) {
           chartsData.activityByLocation[activity] = {};
       }
@@ -73,7 +85,7 @@ function App() {
   const handleDataParsed = (data) => {
     if (data && data.length > 0) {
       const processedData = processDataForCharts(data);
-      setParsedData(processedData); // This line uses the processedData
+      setParsedData(processedData); 
     } else {
       console.log("No data to process.");
     }

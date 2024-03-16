@@ -47,6 +47,8 @@ const activityColors = {
     const hasActivityByLocationData = data.activityByLocation && Object.keys(data.activityByLocation).length > 0;
     const hasDateByMonthData = data.dateByMonth && Object.keys(data.dateByMonth).length > 0;
     const hasDateByYearData = data.dateByYear && Object.keys(data.dateByYear).length > 0;
+    const hasTypeOfInsightData = data.typeOfInsight && Object.keys(data.typeOfInsight).length > 0;
+    const hasAgeRangeData = data.ageRange && Object.keys(data.ageRange).length > 0;
   
     // Function to generate a random color
     const generateRandomColor = () => {
@@ -66,7 +68,7 @@ const activityColors = {
   
       // Ensure borderColor is also handled correctly as an array
       let borderColors = backgroundColors.map(color => {
-        // Assuming the colors are in 'rgba(r, g, b, alpha)' format, increase alpha for border
+        
         let parts = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d?.\d+)\)/);
         if (parts) {
           // Increase the alpha for border color
@@ -166,6 +168,41 @@ const activityColors = {
           }],
         };
       };
+
+      const generateChartDataForTypeOfInsight = () => {
+        const labels = Object.keys(data.typeOfInsight).sort();
+        const dataPoints = labels.map(label => data.typeOfInsight[label]);
+        const backgroundColors = labels.map(() => generateRandomColor()); 
+      
+        return {
+          labels,
+          datasets: [{
+            label: 'Type of Insight',
+            data: dataPoints,
+            backgroundColor: backgroundColors,
+            borderColor: backgroundColors.map(color => color.replace(/0.5\)$/, "1)")), 
+            borderWidth: 1,
+          }],
+        };
+      };
+      
+      const generateChartDataForAgeRange = () => {
+        const labels = Object.keys(data.ageRange).sort();
+        const dataPoints = labels.map(label => data.ageRange[label]);
+        const backgroundColors = labels.map(() => generateRandomColor()); 
+      
+        return {
+          labels,
+          datasets: [{
+            label: 'Age Range',
+            data: dataPoints,
+            backgroundColor: backgroundColors,
+            borderColor: backgroundColors.map(color => color.replace(/0.5\)$/, "1)")), // Increase opacity for border
+            borderWidth: 1,
+          }],
+        };
+      };
+      
   
       return (
         <div className="flex flex-wrap justify-center -mx-2">
@@ -202,6 +239,25 @@ const activityColors = {
               <Bar data={generateChartData(Object.keys(data.location), 'Number of People by Location', Object.values(data.location))} options={{ scales: { y: { beginAtZero: true } } }} />
             </div>
           )}
+          {hasTypeOfInsightData && (
+            <div className="w-full md:w-1/2 p-2">
+            <h2>Type of Insight</h2>
+            <Bar data={generateChartDataForTypeOfInsight()} options={{ scales: { y: { beginAtZero: true } }}} />
+          </div>
+          )
+
+
+          }
+          {hasAgeRangeData && (
+            <div className="w-full md:w-1/2 p-2">
+            <h2>Age Range</h2>
+            <Bar data={generateChartDataForAgeRange()} options={{ scales: { y: { beginAtZero: true } }}} />
+          </div>
+
+          )
+
+
+          }
           {hasDateData && (
             <div className="w-full md:w-1/2 p-2">
             <h1 className="text-center font-bold">Number of People by Month</h1>
@@ -209,7 +265,7 @@ const activityColors = {
               scales: { 
                 y: { beginAtZero: true }, 
                 x: { 
-                  type: 'category', // Change to 'category' since we're using YYYY-MM labels
+                  type: 'category', 
                   title: { display: true, text: 'Month' }
                 } 
               } 
