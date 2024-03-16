@@ -27,7 +27,7 @@ function App() {
     "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss a", "yyyy-MM-dd'T'HH:mm:ss",]; 
   
     data.forEach((item) => {
-      const { Activity: activity, 'Local authority Name': location, 'Number of people': count, Date: dateStr, 'Type of insight': typeOfInsight, Postcode: postcode, 'Age Range': ageRange,  } = item;
+      const { Activity: activity, 'Local authority Name': location, 'Number of people': count, Date: dateStr, 'Type of insight': typeOfInsight, 'Age Range': ageRange,  } = item;
       console.log("Date string:", dateStr);
 
       let parsedDate;
