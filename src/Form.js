@@ -207,7 +207,11 @@ return (
              Contribute
            </button>
          )}
+         
         </div>
+        <div>{hasContributed && (
+         <p className="text-center mt-4">Thank you for contributing your data!</p>
+          )}</div>
       </form>
       
       
