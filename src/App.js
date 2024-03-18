@@ -3,6 +3,7 @@ import Form from './Form';
 import Charts from './Charts';
 import { parse, format, isValid } from 'date-fns';
 
+
 function App() {
   const [parsedData, setParsedData] = useState({ activity: {}, ageRange: {}, gender: {}, location: {}, typeOfInsight: {}, postcode: {}});
 
