@@ -4,11 +4,14 @@ import Papa from 'papaparse';
 import { supabase } from './supabaseClient'
 
 
-const Form = ({ onDataParsed }) => {
+
+const Form = ({ onDataParsed, onContributionComplete }) => {
   const [file, setFile] = useState(null);
   const [organisationName, setOrganisationName] = useState('');
   const [isDataReadyForUpload, setIsDataReadyForUpload] = useState(false);
   const [transformedData, setTransformedData] = useState([]);
+  const [hasContributed, setHasContributed] = useState(false);
+
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -41,6 +44,8 @@ const Form = ({ onDataParsed }) => {
   const handleContributeClick = async () => {
     // Utilize transformedData and organisationName for Supabase upload
     await insertDataToSupabase(organisationName, transformedData);
+    setHasContributed(true); // Indicate that contribution has been made
+    onContributionComplete();
   };
 
   async function insertOrganisationAndGetId(organisationName) {
@@ -158,7 +163,8 @@ const Form = ({ onDataParsed }) => {
 };
 
 return (
-  <div className="flex flex-col items-center justify-center h-screen">
+  <div className="flex flex-col items-center h-auto mt-12"> {/* Adjust the margin-top value (mt-12) as needed */}
+    <h1 className='text-xl font-semibold'>Vizualise your csv - it doesn't leave your browser unless you click contribute</h1>
     <div className="w-full max-w-xs">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {/* Organisation Name and File Input Fields */}
@@ -188,22 +194,25 @@ return (
           />
         </div>
         {/* Submit Button */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between space-x-4">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-            Submit
+            Vizualize
           </button>
+          {/* Conditionally Render Contribute Button */}
+            {isDataReadyForUpload && (
+            <button
+              className="bg-purple-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={handleContributeClick}
+           >
+             Contribute
+           </button>
+         )}
         </div>
       </form>
-      {/* Conditionally Render Contribute Button */}
-      {isDataReadyForUpload && (
-        <button
-          className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={handleContributeClick}
-        >
-          Contribute
-        </button>
-      )}
+      
+      
     </div>
+    
   </div>
 );
 };

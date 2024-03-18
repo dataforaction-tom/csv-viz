@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Form from './Form';
 import Charts from './Charts';
 import { parse, format, isValid } from 'date-fns';
+import AllData from './AllData';
 
 
 function App() {
   const [parsedData, setParsedData] = useState({ activity: {}, ageRange: {}, gender: {}, location: {}, typeOfInsight: {}, postcode: {}});
+  const [showSupabaseData, setShowSupabaseData] = useState(false);
 
   const processDataForCharts = (data) => {
     console.log("Raw data:", data); // Debugging raw data
@@ -92,14 +94,18 @@ function App() {
     }
   };
 
+  const handleContributeClicked = () => {
+    setShowSupabaseData(true); // Change state to show charts from AllData
+  };
+
   return (
      <div className="App">
         <header className="bg-gray-800 text-white text-center p-4">
           <h1 className="text-xl font-semibold">CSV Chart App</h1>
         </header>
 
-      <Form onDataParsed={handleDataParsed} />
-      <Charts data={parsedData}  />
+      <Form onDataParsed={handleDataParsed} onContributionComplete={handleContributeClicked} />
+      {!showSupabaseData ? <Charts data={parsedData} /> : <AllData />}
     </div>
   );
 }
