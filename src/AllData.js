@@ -46,7 +46,7 @@ const AllData = () => {
       setTypeOfInsightChartData(prepareChartData(typeOfInsightData, 'Number of People by Type of Insight'));
       setAgeRangeChartData(prepareChartData(ageRangeData, 'Number of People by Age Range'));
       setPeoplePerMonthChartData(prepareLineChartData(monthData, 'Number of People per Month'));
-      setPeoplePerYearChartData(prepareLineChartData(yearData, 'Number of People per Year'));
+      setPeoplePerYearChartData(prepareChartData(yearData, 'Number of People per Year'));
     };
 
     fetchDataAndAggregate();
@@ -76,8 +76,8 @@ const AllData = () => {
       {typeOfInsightChartData.labels.length > 0 && (
         <div className="w-full md:w-1/2 p-2">
           <h1 className="text-center font-bold">Type of Insight</h1>
-          <div className="w-full">
-            <Bar data={typeOfInsightChartData} options={{responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }} />
+          <div className="w-full h--2">
+            <Bar data={typeOfInsightChartData} options={{ scales: { y: { beginAtZero: true } } }} />
           </div>
         </div>
       )}
@@ -94,7 +94,7 @@ const AllData = () => {
   <div className="w-full md:w-1/2 p-2">
     <h1 className="text-center font-bold">Number of People per Year</h1>
     <div className="w-full">
-      <Line data={peoplePerYearChartData} options={{ scales: { y: { beginAtZero: true } }}} />
+      <Bar data={peoplePerYearChartData} options={{ scales: { y: { beginAtZero: true } }}} />
     </div>
   </div>
 )}
