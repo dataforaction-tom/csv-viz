@@ -54,7 +54,7 @@ const Form = ({ onDataParsed, onContributionComplete }) => {
   async function insertOrganisationAndGetId(organisationName) {
     try {
       
-        // First, check if the organisation already exists
+        // Check if the organisation already exists
         const { data: existingOrg, error: findError } = await supabase
             .from('organisations')
             .select('id')
@@ -141,7 +141,7 @@ const transformDataForSupabase = async (parsedData) => {
   }
 
   const insertDataToSupabase = async (organisationName, transformedData) => {
- // First, insert the organisation and get its ID
+ // Insert the organisation and get its ID
  
  const organisationId = await insertOrganisationAndGetId(organisationName);
  console.log('Retrieved Organisation ID:', organisationId);
@@ -154,7 +154,7 @@ const transformDataForSupabase = async (parsedData) => {
  // Add organisation_id to each item of the transformed data
  const dataWithOrganisationId = transformedData.map(item => ({
    ...item,
-   organisation_id: organisationId, // Ensure this key matches the foreign key column in your "main_data" table
+   organisation_id: organisationId, 
  }));
 
  console.log('Inserting Transformed Data to Supabase:', dataWithOrganisationId);
@@ -173,14 +173,13 @@ const transformDataForSupabase = async (parsedData) => {
 };
 
 return (
-  <div className="flex flex-col items-center h-auto mt-12"> {/* Adjust the margin-top value (mt-12) as needed */}
+  <div className="flex flex-col items-center h-auto mt-12"> 
     <h1 className='text-xl font-semibold'>Vizualise your csv - it doesn't leave your browser unless you click contribute</h1>
     <div className="w-full max-w-xs">
     {loading && <p>Loading postcode information...</p>}
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        {/* Organisation Name and File Input Fields */}
-        <div className="mb-4">
+          <div className="mb-4">
           <label htmlFor="organisation-name" className="block text-gray-700 text-sm font-bold mb-2">
             Organisation Name
           </label>
@@ -205,13 +204,11 @@ return (
             accept=".csv"
           />
         </div>
-        {/* Submit Button */}
-        <div className="flex items-center justify-between space-x-4">
+           <div className="flex items-center justify-between space-x-4">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Vizualize
           </button>
-          {/* Conditionally Render Contribute Button */}
-            {isDataReadyForUpload && (
+           {isDataReadyForUpload && (
             <button
               className="bg-purple-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={handleContributeClick}

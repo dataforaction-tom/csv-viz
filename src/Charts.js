@@ -30,13 +30,12 @@ const activityColors = {
     Energy: 'rgba(54, 162, 235, 0.5)',
     Transport: 'rgba(255, 206, 86, 0.5)',
     Finance: 'rgba(75, 192, 192, 0.5)',
-    // Add more activities and their corresponding colors as needed
+    
   };
   
 
   const Charts = ({ data }) => {
-    // Ensure data and its sub-properties are defined
-    if (!data || Object.keys(data).length === 0 || !data.activity || !data.location || !data.date || !data.activityByLocation) {
+     if (!data || Object.keys(data).length === 0 || !data.activity || !data.location || !data.date || !data.activityByLocation) {
       return <div></div>;
     }
   
@@ -95,12 +94,12 @@ const activityColors = {
         return {
           label: activity,
           data: Object.keys(locationsData).map(location => locationsData[location]),
-          backgroundColor: activityColors[activity] || generateRandomColor(), // Use predefined or random color
+          backgroundColor: activityColors[activity] || generateRandomColor(), 
                 };
              });
   
       return {
-        labels: Object.keys(data.location), // Assuming location names are consistent across activities
+        labels: Object.keys(data.location), 
         datasets,
       };
     };

@@ -3,7 +3,7 @@ import { Bar, Pie, Line } from 'react-chartjs-2';
 import { parseISO, format } from 'date-fns';
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
-import { supabase } from './supabaseClient'; // Ensure this path is correct
+import { supabase } from './supabaseClient'; 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, PointElement, LineElement);
 
@@ -154,7 +154,7 @@ function prepareChartData(aggregatedData, chartLabel) {
 }
 
 function preparePieChartData(aggregatedData, chartLabel) {
-  return prepareChartData(aggregatedData, chartLabel); // Pie chart data preparation is the same
+  return prepareChartData(aggregatedData, chartLabel); 
 }
 
 function prepareLineChartData(aggregatedData, chartLabel) {
