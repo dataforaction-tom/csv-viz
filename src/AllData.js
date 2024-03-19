@@ -60,7 +60,11 @@ const AllData = () => {
   }, []);
 
   return (
+    <div>
+      <h1 className="text-3xl font-semibold text-center pb-8 pt-8 bg-gray-800 text-white">Visualising data from all contributers</h1>
+    
     <div className="flex flex-wrap justify-center -mx-2">
+      
       {activityPieChartData.labels.length > 0 && (
         <div className="w-full md:w-1/2 p-2">
           <h1 className="text-center font-bold">Activity Participation Share</h1>
@@ -123,6 +127,7 @@ const AllData = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

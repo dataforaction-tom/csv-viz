@@ -204,6 +204,8 @@ const activityColors = {
       
   
       return (
+        <div>
+        <h1 className="text-3xl font-semibold text-center pb-8 pt-8 bg-gray-800 text-white">Visualising only your data</h1>
         <div className="flex flex-wrap justify-center -mx-2">
           {hasActivityData && (
             <div className="w-full md:w-1/2 p-2">
@@ -277,6 +279,7 @@ const activityColors = {
               <Bar data={generateChartDataForActivityByLocation()} options={{ scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }} />
             </div>
           )}
+        </div>
         </div>
       );
       
