@@ -37,7 +37,7 @@ const activityColors = {
   const Charts = ({ data }) => {
     // Ensure data and its sub-properties are defined
     if (!data || Object.keys(data).length === 0 || !data.activity || !data.location || !data.date || !data.activityByLocation) {
-      return <div>No data to display</div>;
+      return <div></div>;
     }
   
     // Check for each specific dataset's existence and length

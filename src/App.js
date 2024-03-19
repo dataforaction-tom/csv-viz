@@ -30,8 +30,9 @@ function App() {
     "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss a", "yyyy-MM-dd'T'HH:mm:ss",]; 
   
     data.forEach((item) => {
-      const { Activity: activity, 'Local authority Name': location, 'Number of people': count, Date: dateStr, 'Type of insight': typeOfInsight, 'Age Range': ageRange,  } = item;
+      const { activity, 'local_authority': location, 'number_of_people': count, date: dateStr, 'type_of_insight': typeOfInsight, 'age_range': ageRange,  } = item;
       console.log("Date string:", dateStr);
+      console.log('ACtivity', activity);
 
       let parsedDate;
       let isValidDate = false;

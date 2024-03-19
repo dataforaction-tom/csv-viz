@@ -13,13 +13,16 @@ const AllData = () => {
   const [ageRangeChartData, setAgeRangeChartData] = useState({ labels: [], datasets: [] });
   const [peoplePerMonthChartData, setPeoplePerMonthChartData] = useState({ labels: [], datasets: [] });
   const [peoplePerYearChartData, setPeoplePerYearChartData] = useState({ labels: [], datasets: [] });
+  const [localAuthorityData, setLocalAuthorityData] = useState({ labels: [], datasets: [] });
+  const [peopleByLocalAuthorityData, setPeopleByLocalAuthorityData] = useState({ labels: [], datasets: [] });
+
 
 
   useEffect(() => {
     const fetchDataAndAggregate = async () => {
       let { data, error } = await supabase
         .from('main_data')
-        .select('activity, number_of_people, type_of_insight, age_range, date');
+        .select('activity, number_of_people, type_of_insight, age_range, date, local_authority');
 
       if (error) {
         console.error('Error fetching data:', error);
@@ -30,6 +33,8 @@ const AllData = () => {
       const activityData = aggregateData(data, 'activity');
       const typeOfInsightData = aggregateData(data, 'type_of_insight');
       const ageRangeData = aggregateData(data, 'age_range');
+      const localAuthorityAggregated = aggregateData(data, 'local_authority');
+      const peopleByLocalAuthorityAggregated = aggregateDataBySum(data, 'local_authority', 'number_of_people');
       const monthData = {};
       const yearData = {};
         data.forEach(item => {
@@ -47,6 +52,8 @@ const AllData = () => {
       setAgeRangeChartData(prepareChartData(ageRangeData, 'Number of People by Age Range'));
       setPeoplePerMonthChartData(prepareLineChartData(monthData, 'Number of People per Month'));
       setPeoplePerYearChartData(prepareChartData(yearData, 'Number of People per Year'));
+      setLocalAuthorityData(prepareChartData(localAuthorityAggregated, 'Local Authority Count'));
+      setPeopleByLocalAuthorityData(prepareChartData(peopleByLocalAuthorityAggregated, 'Number of People by Local Authority'));
     };
 
     fetchDataAndAggregate();
@@ -77,7 +84,7 @@ const AllData = () => {
         <div className="w-full md:w-1/2 p-2">
           <h1 className="text-center font-bold">Type of Insight</h1>
           <div className="w-full h--2">
-            <Bar data={typeOfInsightChartData} options={{ scales: { y: { beginAtZero: true } } }} />
+            <Bar data={typeOfInsightChartData} options={{indexAxis: 'y', scales: { y: { beginAtZero: true } } }} />
           </div>
         </div>
       )}
@@ -98,6 +105,24 @@ const AllData = () => {
     </div>
   </div>
 )}
+      {localAuthorityData.labels.length > 0 && (
+        <div className="w-full md:w-1/2 p-2">
+          <h1 className="text-center font-bold">Local Authority Count</h1>
+          <div className="w-full">
+            <Bar data={localAuthorityData} options={{ scales: { y: { beginAtZero: true } }}} />
+          </div>
+        </div>
+      )}
+
+      
+      {peopleByLocalAuthorityData.labels.length > 0 && (
+        <div className="w-full md:w-1/2 p-2">
+          <h1 className="text-center font-bold">Number of People by Local Authority</h1>
+          <div className="w-full">
+            <Bar data={peopleByLocalAuthorityData} options={{ scales: { y: { beginAtZero: true } }}} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -150,5 +175,16 @@ function prepareLineChartData(aggregatedData, chartLabel) {
 function getRandomColor() {
   return `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`;
 }
+
+function aggregateDataBySum(data, categoryField, sumField) {
+  return data.reduce((acc, curr) => {
+    const key = curr[categoryField];
+    const value = parseInt(curr[sumField], 10);
+    acc[key] = (acc[key] || 0) + value;
+    return acc;
+  }, {});
+}
+
+
 
 export default AllData;

@@ -11,6 +11,8 @@ const Form = ({ onDataParsed, onContributionComplete }) => {
   const [isDataReadyForUpload, setIsDataReadyForUpload] = useState(false);
   const [transformedData, setTransformedData] = useState([]);
   const [hasContributed, setHasContributed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
 
   const handleFileChange = (event) => {
@@ -29,12 +31,13 @@ const Form = ({ onDataParsed, onContributionComplete }) => {
     }
 
     Papa.parse(file, {
-      complete: function (results) {
+      complete: async (results) => {
         console.log('Organisation Name:', organisationName);
         console.log('File parsed:', results.data);
-        onDataParsed(results.data);
-        const transformed = transformDataForSupabase(results.data);
+        const transformed = await transformDataForSupabase(results.data);
+        console.log('Transformed Data',transformed);
         setTransformedData(transformed); // Store transformed data for later use
+        onDataParsed(transformed); // Visualize transformed data immediately
         setIsDataReadyForUpload(true); // Indicate that data is ready for upload
       },
       header: true,
@@ -99,32 +102,39 @@ const Form = ({ onDataParsed, onContributionComplete }) => {
     }
 }
 
-  
-  
+const transformDataForSupabase = async (parsedData) => {
+  setLoading(true);
+  setErrorMessage('');
 
-  
-  
-  
-  
-  
-  
-  
-
-  const transformDataForSupabase = (parsedData) => {
-    return parsedData.map(item => ({
-      
+  const dataWithLocalAuthority = await Promise.all(parsedData.map(async (item) => {
+    let localAuthority = '';
+    if (item["Postcode"]) {
+      try {
+        const response = await fetch(`https://api.postcodes.io/postcodes/${item["Postcode"]}`);
+        if (!response.ok) throw new Error('Failed to fetch postcode data');
+        const data = await response.json();
+        localAuthority = data.result.admin_district;
+      } catch (error) {
+        console.error('Error fetching postcode data:', error);
+        setErrorMessage(`Failed to fetch data for postcode: ${item["Postcode"]}`);
+      }
+    }
+    return {
       activity: item["Activity"],
       age_range: item["Age Range"],
       date: convertDateToISO(item["Date"]),
-      number_of_people: parseInt(item["Number of people"], 10), // Assuming this should be an integer
+      number_of_people: parseInt(item["Number of people"], 10),
       postcode: item["Postcode"],
       type_of_insight: item["Type of insight"],
       location: item["What approximate location does this relate to?"],
-      
-      
-    }));
-    
-  }
+      local_authority: localAuthority
+    };
+  }));
+
+  setLoading(false);
+  return dataWithLocalAuthority;
+};
+
   function convertDateToISO(dateString) {
     const parts = dateString.split("/");
     return `${parts[2]}-${parts[1]}-${parts[0]}`; // Assuming the format is DD/MM/YYYY
@@ -166,6 +176,8 @@ return (
   <div className="flex flex-col items-center h-auto mt-12"> {/* Adjust the margin-top value (mt-12) as needed */}
     <h1 className='text-xl font-semibold'>Vizualise your csv - it doesn't leave your browser unless you click contribute</h1>
     <div className="w-full max-w-xs">
+    {loading && <p>Loading postcode information...</p>}
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {/* Organisation Name and File Input Fields */}
         <div className="mb-4">
