@@ -174,7 +174,7 @@ const transformDataForSupabase = async (parsedData) => {
 
 return (
   <div className="flex flex-col items-center h-auto mt-12"> 
-    <h1 className='text-xl font-semibold'>Vizualise your csv - it doesn't leave your browser unless you click contribute</h1>
+    <h1 className='text-xl font-semibold'>Visualise your csv - it doesn't leave your browser unless you click contribute</h1>
     <div className="w-full max-w-xs">
     {loading && <p>Loading postcode information...</p>}
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
@@ -206,7 +206,7 @@ return (
         </div>
            <div className="flex items-center justify-between space-x-4">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-            Vizualize
+            Visualise
           </button>
            {isDataReadyForUpload && (
             <button
