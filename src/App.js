@@ -4,7 +4,7 @@ import Charts from './Charts';
 import { parse, format, isValid } from 'date-fns';
 import AllData from './AllData';
 import sampleData from './assets/SampleData.csv';
-import logo from './assets/logo.jpg';
+
 
 
 
@@ -105,17 +105,17 @@ function App() {
   return (
      <div className="App">
         <header className="bg-gray-800 text-white p-4 flex justify-center items-center">
-        <img src={logo} alt="Logo" className="absolute left-4 top-4 w-12 h-12" />
-        <h1 className="text-3xl font-semibold">csv prototype data visualiser</h1>
+        <h2 className="absolute left-4 top-4 font-bold text-2xl "> Data For Action .</h2>
+        <h1 className="text-3xl font-bold">csv prototype data visualiser</h1>
         </header>
         <div className='flex flex-col items-center h-auto bg-gray-600 text-white text-pretty pb-6'>
         <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">This is a prototype tool which allows you to visualise a specific data strucuture in your browser.  </h1>
         <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">You can then choose to contribute this data to a wider database and see all the aggregated data visualised for you</h1>
         
-        <p className="text-center font-semibold mb-4  ">
+        <p className="text-center font-semibold mb-4 pt-6 ">
         To use this tool a specific data structure is needed. Click the button to download the csv which provides the column headings to use and some example data. 
         </p>
-        <p className="text-center font-semibold mb-4 pb-6">
+        <p className="text-center font-semibold mb-4 pb-2">
         Upload in this format ONLY to see the visualisations
         </p>
          
