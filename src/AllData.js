@@ -15,7 +15,7 @@ const AllData = () => {
   const [peoplePerYearChartData, setPeoplePerYearChartData] = useState({ labels: [], datasets: [] });
   const [localAuthorityData, setLocalAuthorityData] = useState({ labels: [], datasets: [] });
   const [peopleByLocalAuthorityData, setPeopleByLocalAuthorityData] = useState({ labels: [], datasets: [] });
-  const colourPalette = ['#f860b1', '#f3581d', '#9dc131', '#eca900', '#1f1d1e']
+  
 
 
 

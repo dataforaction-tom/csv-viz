@@ -1,5 +1,5 @@
 
-import Dataviz from './Dataviz';
+
 import Header from './Header';
 import LandingPage from './LandingPage';
 
