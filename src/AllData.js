@@ -15,6 +15,7 @@ const AllData = () => {
   const [peoplePerYearChartData, setPeoplePerYearChartData] = useState({ labels: [], datasets: [] });
   const [localAuthorityData, setLocalAuthorityData] = useState({ labels: [], datasets: [] });
   const [peopleByLocalAuthorityData, setPeopleByLocalAuthorityData] = useState({ labels: [], datasets: [] });
+  const colourPalette = ['#f860b1', '#f3581d', '#9dc131', '#eca900', '#1f1d1e']
 
 
 
@@ -66,7 +67,7 @@ const AllData = () => {
     <div className="flex flex-wrap justify-center -mx-2">
       
       {activityPieChartData.labels.length > 0 && (
-        <div className="w-full md:w-1/2 p-2">
+        <div className="w-full md:w-1/2 p-2 ">
           <h1 className="text-center font-bold">Activity Participation Share</h1>
           <div className="max-w-sm mx-auto">
             <Pie data={activityPieChartData} />
@@ -77,7 +78,7 @@ const AllData = () => {
       
 
       {ageRangeChartData.labels.length > 0 && (
-        <div className="w-full md:w-1/2 p-2">
+        <div className="w-full md:w-1/2 p-2 ">
           <h1 className="text-center font-bold">Age Range</h1>
           <div className="w-full">
             <Bar data={ageRangeChartData} options={{ scales: { y: { beginAtZero: true } } }} />
