@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaCheckCircle, FaQuestionCircle, FaChartBar } from 'react-icons/fa';
 import Dataviz from './Dataviz';
 import DataSharingChecklist from './DataSharingChecklist';
-import Journey from './Journey';
+
 import { GiJourney } from 'react-icons/gi';
 
 const Circle = ({ icon, color, text, onClick }) => (
@@ -30,8 +30,7 @@ const LandingPage = () => {
         return <Component3 />;
       case 3:
         return <Dataviz />;
-      case 4:
-        return <Journey />;  
+       
       default:
         return (
           <div
@@ -71,7 +70,7 @@ const LandingPage = () => {
                 icon={<GiJourney size={32} />}
                 color="border-yellow-500"
                 text="See the journey"
-                onClick={() => setSelectedComponent(4)}
+                onClick={() => setSelectedComponent(3)}
               />
 
             </div>
