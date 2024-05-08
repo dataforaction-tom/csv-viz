@@ -8,6 +8,7 @@ import DataSharingChecklist from './DataSharingChecklist';
 import AllData from './AllData';
 import Journey from './Journey';
 import DataSquad from './DataSquad';
+import Footer from './Footer';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/journey" element={<Journey />} />
           <Route path="/datasquad" element={<DataSquad />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
