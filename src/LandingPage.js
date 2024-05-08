@@ -69,14 +69,14 @@ const LandingPage = () => {
                 icon={<FaCheckCircle size={32} />}
                 color="border-[#f860b1]"
                 text="Data Sharing Checklist"
-                navigateTo="/csv-viz/checklist"
+                navigateTo="/checklist"
               />
               <Circle
                 aboveText="See all data sets?"
                 icon={<TbEyeShare size={32}/>  }
                 color="border-[#f3581d]"
                 text="All Data"
-                navigateTo="/csv-viz/alldata"
+                navigateTo="/alldata"
               />
               
               <Circle
@@ -84,14 +84,14 @@ const LandingPage = () => {
                 icon={<FaQuestionCircle size={32} />}
                 color="border-[#eca900]"
                 text="Data Squad"
-                navigateTo="/csv-viz/datasquad"
+                navigateTo="/datasquad"
               />
               <Circle
                 aboveText="Just want to get on with sharing data?"
                 icon={<FaChartBar size={32} />}
                 color="border-[#9dc131]"
                 text="Visualise and contribute"
-                navigateTo="/csv-viz/visualise"
+                navigateTo="/visualise"
               />
 
               <Circle
@@ -99,7 +99,7 @@ const LandingPage = () => {
                 icon={<GiJourney size={32} />}
                 color="border-red-500"
                 text="See the Journey"
-                navigateTo="/csv-viz/journey"
+                navigateTo="/journey"
               />
               
             </div>
