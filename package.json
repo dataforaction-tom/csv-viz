@@ -1,8 +1,7 @@
 {
   "name": "jrf-viz-2",
   "version": "0.1.0",
-  "private": true,
-  
+  "private": true,  
   "dependencies": {
     "@supabase/supabase-js": "^2.39.8",
     "@testing-library/jest-dom": "^5.17.0",
