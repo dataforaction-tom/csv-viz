@@ -16,7 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/csv-viz/checklist" element={<DataSharingChecklist />} />
+          <Route path="/checklist" element={<DataSharingChecklist />} />
           <Route path="/alldata" element={<AllData />} />
           <Route path="/visualise" element={<Dataviz />} />
           <Route path="/journey" element={<Journey />} />
