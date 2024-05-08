@@ -118,7 +118,7 @@ function Dataviz() {
         Upload in this format ONLY to see the visualisations
         </p>
          
-        <a href={sampleData} download="SampleData.csv" className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+        <a href={sampleData} download="SampleData.csv" className="bg-orange-500 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded">
           Download Sample CSV
           </a>
         </div>
