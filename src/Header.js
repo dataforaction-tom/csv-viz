@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation'; // Import the Navigation component
 
+
 const Header = () => {
     return (
         <header className="bg-zinc-950 text-white flex justify-between items-center p-4">
