@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Navigation = () => {
     return (
         <nav>
-            <NavLink to="/csv-viz" className={({ isActive }) => 
+            <NavLink to="/" className={({ isActive }) => 
                 "bg-[#f3581d] hover:bg-[#9dc131] text-white font-bold py-2 px-4 rounded" + 
                 (isActive ? " bg-pink-500" : "")
             }>
