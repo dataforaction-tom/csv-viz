@@ -24,6 +24,7 @@ function App() {
           <Route path="/datasquad" element={<DataSquad />} />
         </Routes>
         <Footer />
+        
       </div>
     </Router>
   );
