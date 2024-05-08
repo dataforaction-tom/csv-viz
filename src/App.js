@@ -15,7 +15,7 @@ function App() {
     <Router>
       <div className="bg-stone-100">
         <Header />
-        <LandingPage />
+        
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path="/csv-viz/checklist" element={<DataSharingChecklist />} />
