@@ -7,7 +7,10 @@ import { TbEyeShare } from "react-icons/tb";
 const Circle = ({ icon, color, text, aboveText, navigateTo }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center space-y-1 cursor-pointer mx-2 text-center">
+    <div
+      className="flex flex-col items-center space-y-1 cursor-pointer mx-2 text-center"
+      onClick={() => navigate(navigateTo)}
+    >
       <p className="text-xs sm:text-sm md:text-base font-semibold mb-2">{aboveText}</p>
       <div className={`flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-black rounded-full border-4 sm:border-6 md:border-8 ${color}`}>
         {React.cloneElement(icon, { size: 20, className: 'sm:w-6 sm:h-6 md:w-8 md:h-8' })}
