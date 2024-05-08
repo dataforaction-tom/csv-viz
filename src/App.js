@@ -15,6 +15,7 @@ function App() {
     <Router>
       <div className="bg-stone-100">
         <Header />
+        <LandingPage />
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path="/checklist" element={<DataSharingChecklist />} />
@@ -23,7 +24,7 @@ function App() {
           <Route path="/journey" element={<Journey />} />
           <Route path="/datasquad" element={<DataSquad />} />
         </Routes>
-        <LandingPage />
+        
       </div>
     </Router>
   );
