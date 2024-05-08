@@ -5,19 +5,19 @@ const Navigation = () => {
     return (
         <nav>
             <NavLink to="/" className={({ isActive }) => 
-                "bg-orange-700 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded" + 
+                "bg-[#f3581d] hover:bg-[#9dc131] text-white font-bold py-2 px-4 rounded" + 
                 (isActive ? " bg-pink-500" : "")
             }>
                 Home
             </NavLink>
             <NavLink to="/about" className={({ isActive }) => 
-                "bg-orange-700 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded ml-2" + 
+                "bg-[#f3581d] hover:bg-[#9dc131] text-white font-bold py-2 px-4 rounded ml-2" + 
                 (isActive ? " bg-pink-500" : "")
             }>
                 About
             </NavLink>
             <NavLink to="/contact" className={({ isActive }) => 
-                "bg-orange-700 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded ml-2" + 
+                "bg-[#f3581d] hover:bg-[#9dc131] text-white font-bold py-2 px-4 rounded ml-2" + 
                 (isActive ? " bg-pink-500" : "")
             }>
                 Contact

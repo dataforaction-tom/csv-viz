@@ -1,24 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle, FaQuestionCircle, FaChartBar } from 'react-icons/fa';
 import { GiJourney } from 'react-icons/gi';
-import Dataviz from './Dataviz';
-import DataSharingChecklist from './DataSharingChecklist';
+import { FaAnglesDown } from "react-icons/fa6";
+import { TbEyeShare } from "react-icons/tb";
 
-const Circle = ({ icon, color, text, onClick }) => (
-  <div className="flex flex-col items-center space-y-2 cursor-pointer mx-20" onClick={onClick}>
-    <div
-      className={`flex items-center justify-center w-32 h-32 text-black rounded-full border-8 ${color}`}
-    >
-      {icon}
+const Circle = ({ icon, color, text, aboveText, navigateTo }) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="flex flex-col items-center space-y-1 cursor-pointer mx-2" onClick={() => navigate(navigateTo)}>
+      <p className="text-base font-semibold mb-15 pb-20 text-justify text-wrap">{aboveText}</p>
+      <div className="pb-10"><FaAnglesDown size={32}/> </div>
+      <div className={`flex items-center justify-center w-28 h-28 text-black rounded-full border-8 ${color}`}>
+        {icon}
+      </div>
+      <p className="text-center">{text}</p>
     </div>
-    <p className="text-center">{text}</p>
-  </div>
-);
-
-const Component3 = () => <div>Component 3 content goes here...</div>;
+  );
+};
 
 const LandingPage = () => {
-  const [selectedComponent, setSelectedComponent] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const imageRef = useRef(null);
 
@@ -27,9 +29,7 @@ const LandingPage = () => {
     const { left, top, width, height } = imageRef.current.getBoundingClientRect();
     const centerX = left + width / 2;
     const centerY = top + height / 2;
-
-    // Define the hover active area (e.g., 20% of the image size)
-    const hoverActiveWidth = width * 0.8;
+    const hoverActiveWidth = width * 1;
     const hoverActiveHeight = height * 0.6;
 
     if (
@@ -44,66 +44,67 @@ const LandingPage = () => {
     }
   };
 
-  const renderComponent = () => {
-    switch (selectedComponent) {
-      case 1:
-        return <DataSharingChecklist />;
-      case 2:
-        return <Component3 />;
-      case 3:
-        return <Dataviz />;
-      default:
-        return (
-          <div
-            className="flex justify-center items-center w-3/5 h-3/4"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setIsHovered(false)}
-            ref={imageRef}
-          >
-            <img
-              src={process.env.PUBLIC_URL + "/Datasharingjourneyv2.png"}
-              alt="Data Sharing Movement"
-              className={`object-contain transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}
-            />
-            <div
-              className={`font-bold text-xl absolute inset-0 flex justify-center items-center transition-opacity duration-500 ${
-                isHovered ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <Circle
-                icon={<FaCheckCircle size={32} />}
-                color="border-pink-500"
-                text="Data Sharing Checklist"
-                onClick={() => setSelectedComponent(1)}
-              />
-              <Circle
-                icon={<FaQuestionCircle size={32} />}
-                color="border-orange-500"
-                text="Data squad help"
-                onClick={() => setSelectedComponent(2)}
-              />
-              <Circle
-                icon={<FaChartBar size={32} />}
-                color="border-green-500"
-                text="Visualise and contribute"
-                onClick={() => setSelectedComponent(3)}
-              />
-              <Circle
-                icon={<GiJourney size={32} />}
-                color="border-yellow-500"
-                text="See the journey"
-                onClick={() => setSelectedComponent(3)}
-              />
-            </div>
-          </div>
-        );
-    }
-  };
-
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col items-center justify-center space-y-8 p-8 w-full">
-        {renderComponent()}
+        <div
+          className="flex justify-center items-center w-4/5 h-3/4"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setIsHovered(false)}
+          ref={imageRef}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/Datasharingjourneyv2.png"}
+            alt="Data Sharing Movement"
+            className={`object-contain transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}
+          />
+          <div
+            className={`font-bold text-xl absolute inset-0 flex justify-center items-center transition-opacity duration-500 ${
+              isHovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <div className='grid grid-cols-5'>
+              <Circle
+                aboveText="Want to check your data sharing knowledge?"
+                icon={<FaCheckCircle size={32} />}
+                color="border-[#f860b1]"
+                text="Data Sharing Checklist"
+                navigateTo="/checklist"
+              />
+              <Circle
+                aboveText="See all data sets?"
+                icon={<TbEyeShare size={32}/>  }
+                color="border-[#f3581d]"
+                text="All Data"
+                navigateTo="/alldata"
+              />
+              
+              <Circle
+                aboveText="Want to share data but feeling you need help?"
+                icon={<FaQuestionCircle size={32} />}
+                color="border-[#eca900]"
+                text="Data Squad"
+                navigateTo="/datasquad"
+              />
+              <Circle
+                aboveText="Just want to get on with sharing data?"
+                icon={<FaChartBar size={32} />}
+                color="border-[#9dc131]"
+                text="Visualise and contribute"
+                navigateTo="/visualise"
+              />
+
+              <Circle
+                aboveText="What to understand the journey we're on?"
+                icon={<GiJourney size={32} />}
+                color="border-red-500"
+                text="See the Journey"
+                navigateTo="/journey"
+              />
+              
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

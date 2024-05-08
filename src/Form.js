@@ -173,12 +173,12 @@ const transformDataForSupabase = async (parsedData) => {
 };
 
 return (
-  <div className="flex flex-col items-center h-auto mt-12"> 
-    <h1 className='text-xl font-semibold'>Visualise your csv - it doesn't leave your browser unless you click contribute</h1>
+  <div className="flex flex-col items-center h-auto mt-4 mb-5 "> 
+    <h1 className='text-xl font-semibold text-white mb-5'>Visualise your csv - it doesn't leave your browser unless you click contribute</h1>
     <div className="w-full max-w-xs">
     {loading && <p>Loading postcode information...</p>}
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
           <div className="mb-4">
           <label htmlFor="organisation-name" className="block text-gray-700 text-sm font-bold mb-2">
             Organisation Name
@@ -205,12 +205,12 @@ return (
           />
         </div>
            <div className="flex items-center justify-between space-x-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Visualise
           </button>
            {isDataReadyForUpload && (
             <button
-              className="bg-purple-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={handleContributeClick}
            >
              Contribute

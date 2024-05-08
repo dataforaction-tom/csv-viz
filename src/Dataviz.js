@@ -104,11 +104,12 @@ function Dataviz() {
 
   return (
      <div className="App">
-        <header className="bg-gray-800 text-white p-4 flex justify-center items-center">
+        <header className="">
         
         </header>
-        <div className='flex flex-col items-center h-auto bg-gray-600 text-white text-pretty pb-6'>
-        <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">This is a prototype tool which allows you to visualise a specific data strucuture in your browser.  </h1>
+        <div className='grid grid-cols-2 bg-gray-700'>
+        <div className='flex flex-col items-center h-auto bg-gray-800 text-white text-pretty pb-6'>
+        <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">This is a prototype tool which allows you to visualise a specific data structure in your browser.  </h1>
         <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">You can then choose to contribute this data to a wider database and see all the aggregated data visualised for you</h1>
         
         <p className="text-center font-semibold mb-4 pt-6 ">
@@ -125,8 +126,10 @@ function Dataviz() {
         
 
       <Form onDataParsed={handleDataParsed} onContributionComplete={handleContributeClicked} />
+      </div>
       {!showSupabaseData ? <Charts data={parsedData} /> : <AllData />}
     </div>
+    
   );
 }
 
