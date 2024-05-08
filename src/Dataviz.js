@@ -103,11 +103,11 @@ function Dataviz() {
   };
 
   return (
-     <div className="App">
+     <div className="">
         <header className="">
         
         </header>
-        <div className='grid grid-cols-2 bg-[#1f1d1e]'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 bg-[#1f1d1e]'>
         <div className='flex flex-col items-center h-auto bg-[#1f1d1e] text-white text-pretty pb-6'>
         <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">This is a prototype tool which allows you to visualise a specific data structure in your browser.  </h1>
         <h1 className="text-xl font-semibold text-center px-4  text-white pt-6 ">You can then choose to contribute this data to a wider database and see all the aggregated data visualised for you</h1>
