@@ -23,6 +23,7 @@ function App() {
           <Route path="/journey" element={<Journey />} />
           <Route path="/datasquad" element={<DataSquad />} />
         </Routes>
+        <LandingPage />
       </div>
     </Router>
   );

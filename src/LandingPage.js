@@ -45,7 +45,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-4/5">
       <div className="flex flex-col items-center justify-center space-y-8 p-8 w-full">
         <div
           className="flex justify-center items-center w-4/5 h-3/4"
