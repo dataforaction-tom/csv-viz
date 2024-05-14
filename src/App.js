@@ -12,21 +12,10 @@ import DataSquad from './DataSquad'; // Ensure this component exists
 
 function App() {
   return (
-    <Router>
-      <div className="bg-stone-100">
-        <Header />
-        
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path="/checklist" element={<DataSharingChecklist />} />
-          <Route path="/alldata" element={<AllData />} />
-          <Route path="/visualise" element={<Dataviz />} />
-          <Route path="/journey" element={<Journey />} />
-          <Route path="/datasquad" element={<DataSquad />} />
-        </Routes>
-        
-      </div>
-    </Router>
+    
+        <Dataviz />
+    
+    
   );
 }
 
