@@ -39,7 +39,7 @@ const Footer = () => {
       <div className="flex items-center space-x-4 sm:space-x-10">
         <img src={process.env.PUBLIC_URL + "/DataforAction_Logo_offblack_pink.png"} alt="DFALogo" className="h-20" />
         <img src={process.env.PUBLIC_URL + "/InsightInfrastructurePackage_Logo.svg"} alt="IILogo" className="h-20" />
-        <img src={process.env.PUBLIC_URL + "/JRF_Lock-up_3Line.svg"} alt="JRFLogo" className="h-20" />
+        <img src={process.env.PUBLIC_URL + "/JRF_Lock-up_3line.svg"} alt="JRFLogo" className="h-20" />
       </div>
     </div>
     </div>
