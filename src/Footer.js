@@ -22,7 +22,7 @@ const Circle = ({ icon, color, text, aboveText, navigateTo }) => {
 
 const Footer = () => {
   return (
-    <div className='pt-10 sticky bottom-0'>
+    <div className='pt-10 '>
       <hr className="border-t-2 border-dotted border-[#f860b1] w-4/5 mx-auto my-4" />
       <div className="mt-4 md:mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 justify-center items-center pb-10 mx-auto">
         <Circle aboveText="Check your knowledge?" icon={<FaCheckCircle />} color="border-[#f860b1]" text="Checklist" navigateTo="/checklist" />

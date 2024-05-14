@@ -13,7 +13,7 @@ import Footer from './Footer';
 function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <div className="bg-stone-100 flex flex-col min-h-screen ">
+      <div className="bg-stone-100  ">
         <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -23,9 +23,9 @@ function App() {
           <Route path="/journey" element={<Journey />} />
           <Route path="/datasquad" element={<DataSquad />} />
         </Routes>
-        <div className='sticky bottom-0'>
+        
         <Footer />
-        </div>
+        
       </div>
     </Router>
   );
