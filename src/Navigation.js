@@ -38,7 +38,7 @@ const Navigation = () => {
           (isActive ? " bg-pink-500" : "")
         }
       >
-        See Data
+        View Data
       </NavLink>
       
       <NavLink
