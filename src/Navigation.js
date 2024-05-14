@@ -23,14 +23,24 @@ const Navigation = () => {
         Checklist
       </NavLink>
       <NavLink
+        to="/Dataviz"
+        className={({ isActive }) =>
+          "bg-[#f860b1] hover:bg-[#9dc131] text-white font-bold py-2 px-4 rounded mb-2 sm:mb-0 sm:mr-2 w-4/5 sm:w-auto text-center" +
+          (isActive ? " bg-pink-500" : "")
+        }
+      >
+        Visualise
+      </NavLink>
+      <NavLink
         to="/alldata"
         className={({ isActive }) =>
           "bg-[#f860b1] hover:bg-[#9dc131] text-white font-bold py-2 px-4 rounded mb-2 sm:mb-0 sm:mr-2 w-4/5 sm:w-auto text-center" +
           (isActive ? " bg-pink-500" : "")
         }
       >
-        Data
+        See Data
       </NavLink>
+      
       <NavLink
         to="/journey"
         className={({ isActive }) =>

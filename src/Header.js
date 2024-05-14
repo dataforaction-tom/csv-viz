@@ -7,7 +7,7 @@ const Header = () => {
       <div className="flex items-center mb-4 sm:mb-0">
         <img src={process.env.PUBLIC_URL + "/DataforAction_Logo_offwhite_orange.png"} alt="Logo" className="h-8 mr-4 sm:mr-10" />
         
-        <h1 className="text-xl font-bold">Insight Infrastructure - prototypes</h1>
+        <h1 className="text-xl font-bold">Charity Data Works - prototypes as part of the Insight Infrastructure programme</h1>
       </div>
       <Navigation />
     </header>
