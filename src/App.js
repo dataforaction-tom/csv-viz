@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './Header';
 import LandingPage from './LandingPage';
-import Dataviz from './Dataviz';
+import Dataviz from './dataviz';
 import DataSharingChecklist from './DataSharingChecklist';
 import AllData from './AllData';
 import Journey from './Journey';
@@ -22,6 +22,7 @@ function App() {
           <Route path="/visualise" element={<Dataviz />} />
           <Route path="/journey" element={<Journey />} />
           <Route path="/datasquad" element={<DataSquad />} />
+          <Route path="/dataviz" element={<Dataviz />} />
         </Routes>
         
         <Footer />
