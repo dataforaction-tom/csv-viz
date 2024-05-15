@@ -27,9 +27,9 @@ function Dataviz() {
     };
 
     const dateFormats = ["dd/MM/yyyy", "dd-MM-yyyy", "d/M/yyyy",
-    "MM/dd/yyyy", "MM-dd-yyyy", "M/d/yyyy",
-    "yyyy/MM/dd", "yyyy-MM-dd", "yyyy/M/d",
-    "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss a", "yyyy-MM-dd'T'HH:mm:ss",]; 
+      "MM/dd/yyyy", "MM-dd-yyyy", "M/d/yyyy",
+      "yyyy/MM/dd", "yyyy-MM-dd", "yyyy/M/d",
+      "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss a", "yyyy-MM-dd'T'HH:mm:ss",]; 
 
     data.forEach((item) => {
       const { activity, 'local_authority': location, 'number_of_people': count, date: dateStr, 'type_of_insight': typeOfInsight, 'age_range': ageRange,  } = item;
@@ -110,13 +110,15 @@ function Dataviz() {
       </div>
       {!showSupabaseData ? (
         <>
-          <Charts data={filteredData} />
-          <DataTable
-            data={parsedData}
-            globalFilter={globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            setFilteredData={setFilteredData}
-          />
+          {filteredData.length > 0 && <Charts data={filteredData} />}
+          {parsedData.length > 0 && (
+            <DataTable
+              data={parsedData}
+              globalFilter={globalFilter}
+              setGlobalFilter={setGlobalFilter}
+              setFilteredData={setFilteredData}
+            />
+          )}
         </>
       ) : (
         <AllData />
