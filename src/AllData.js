@@ -100,7 +100,7 @@ const AllData = () => {
         <p className="text-xl font-semibold">
           Please note, all data in here is currently dummy data for testing purposes. 
           <br />
-          You can read the full context of our work and where this prototype came from on our notion site 
+          You can read the full context of our work and where this prototype came from on our notion site  
           <a href='https://dataforaction.notion.site/Prototyping-insight-infrastructure-for-the-charity-sector-b53e4b066c2440f6b91f1ad0f334fc8c' title="Data For Action Charity Data Works Project" className="text-pink-500 font-bold" rel="noreferrer" target="_blank">here.</a>
         </p>
         <h1 className="text-3xl font-semibold text-center pb-8 pt-8 bg-gray-800 text-white">Visualising data from all contributors</h1>
