@@ -15,6 +15,11 @@ import { CSVLink } from 'react-csv';
 const DataTable = ({ data, globalFilter, setGlobalFilter, setFilteredData }) => {
   const [sorting, setSorting] = useState([]);
   const [grouping, setGrouping] = useState([]);
+  const [tableData, setTableData] = useState(data);
+
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
 
   const columnHelper = createColumnHelper();
 
@@ -22,33 +27,39 @@ const DataTable = ({ data, globalFilter, setGlobalFilter, setFilteredData }) => 
     columnHelper.accessor('activity', {
       header: 'Activity',
       cell: info => info.getValue(),
+      footer: info => info.column.id,
     }),
     columnHelper.accessor('local_authority', {
       header: 'Location',
       cell: info => info.getValue(),
+      footer: info => info.column.id,
     }),
     columnHelper.accessor('number_of_people', {
       header: 'Number of People',
       cell: info => info.getValue(),
       aggregationFn: aggregationFns.sum,
       aggregatedCell: ({ getValue }) => getValue(),
+      footer: info => info.column.id,
     }),
     columnHelper.accessor('date', {
       header: 'Date',
       cell: info => info.getValue(),
+      footer: info => info.column.id,
     }),
     columnHelper.accessor('type_of_insight', {
       header: 'Type of Insight',
       cell: info => info.getValue(),
+      footer: info => info.column.id,
     }),
     columnHelper.accessor('age_range', {
       header: 'Age Range',
       cell: info => info.getValue(),
+      footer: info => info.column.id,
     }),
   ], [columnHelper]);
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     state: {
       sorting,
@@ -137,7 +148,7 @@ const DataTable = ({ data, globalFilter, setGlobalFilter, setFilteredData }) => 
                             },
                           }}
                         >
-                          {row.getIsExpanded() ? '👇' : '👉'} {row.groupingVal} ({row.subRows.length})
+                          {`${row.getValue(row.groupingColumnId)} (${row.subRows.length})`}
                         </div>
                       </td>
                     </tr>
