@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -10,10 +10,10 @@ import {
   aggregationFns,
 } from '@tanstack/react-table';
 import { Input } from './Input';
+import { CSVLink } from 'react-csv';
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, globalFilter, setGlobalFilter, setFilteredData }) => {
   const [sorting, setSorting] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState('');
   const [grouping, setGrouping] = useState([]);
 
   const columnHelper = createColumnHelper();
@@ -64,11 +64,20 @@ const DataTable = ({ data }) => {
     getGroupedRowModel: getGroupedRowModel(),
   });
 
-  // Calculate the total number of people for the summary row
+  useEffect(() => {
+    if (!grouping.length) {
+      setFilteredData(table.getRowModel().rows.map(row => row.original));
+    }
+  }, [table.getRowModel().rows, setFilteredData, grouping.length]);
+
   const totalNumberOfPeople = useMemo(
     () => table.getRowModel().rows.reduce((sum, row) => sum + (row.original?.number_of_people || 0), 0),
     [table.getRowModel().rows]
   );
+
+  const csvData = useMemo(() => {
+    return table.getRowModel().rows.map(row => row.original);
+  }, [table.getRowModel().rows]);
 
   return (
     <div className="p-4">
@@ -92,84 +101,93 @@ const DataTable = ({ data }) => {
           </button>
         ))}
       </div>
-      <table className="min-w-full bg-white border border-slate-200">
-        <thead className="bg-[#1f1d1e] text-white">
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th
-                  key={header.id}
-                  className="px-4 py-2 border border-slate-200 cursor-pointer"
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                  {{
-                    asc: ' 🔼',
-                    desc: ' 🔽',
-                  }[header.column.getIsSorted()] ?? null}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <React.Fragment key={row.id}>
-              {row.getIsGrouped() ? (
-                <>
-                  <tr className="bg-[#f860b1]">
-                    <td colSpan={row.getVisibleCells().length} className="px-4 py-2 border border-slate-200">
-                      <div
-                        {...{
-                          onClick: row.getToggleExpandedHandler(),
-                          style: {
-                            cursor: 'pointer',
-                          },
-                        }}
-                      >
-                        {row.getIsExpanded() ? '👇' : '👉'} {row.groupingVal} ({row.subRows.length})
-                      </div>
-                    </td>
-                  </tr>
-                  {row.getIsExpanded() && row.subRows.map(subRow => (
-                    <tr key={subRow.id} className={subRow.depth % 2 === 0 ? 'bg-white' : 'bg-slate-100'}>
-                      {subRow.getVisibleCells().map(cell => (
-                        <td key={cell.id} className="px-4 py-2 border border-slate-200">
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                  {row.getIsExpanded() && (
-                    <tr className="bg-[#9dc131]">
-                      <td colSpan={row.getVisibleCells().length} className="px-4 py-2 border border-slate-200 font-bold">
-                        Total Number of People: {row.subRows.reduce((sum, subRow) => sum + subRow.original.number_of_people, 0)}
+      <div className="overflow-auto" style={{ maxHeight: '400px' }}>
+        <table className="min-w-full bg-white border border-slate-200">
+          <thead className="bg-[#1f1d1e] text-white">
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th
+                    key={header.id}
+                    className="px-4 py-2 border border-slate-200 cursor-pointer"
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {{
+                      asc: ' 🔼',
+                      desc: ' 🔽',
+                    }[header.column.getIsSorted()] ?? null}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map(row => (
+              <React.Fragment key={row.id}>
+                {row.getIsGrouped() ? (
+                  <>
+                    <tr className="bg-[#f860b1]">
+                      <td colSpan={row.getVisibleCells().length} className="px-4 py-2 border border-slate-200">
+                        <div
+                          {...{
+                            onClick: row.getToggleExpandedHandler(),
+                            style: {
+                              cursor: 'pointer',
+                            },
+                          }}
+                        >
+                          {row.getIsExpanded() ? '👇' : '👉'} {row.groupingVal} ({row.subRows.length})
+                        </div>
                       </td>
                     </tr>
-                  )}
-                </>
-              ) : (
-                <tr className={row.depth % 2 === 0 ? 'bg-white' : 'bg-slate-100'}>
-                  {row.getVisibleCells().map(cell => (
-                    <td key={cell.id} className="px-4 py-2 border border-slate-200">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              )}
-            </React.Fragment>
-          ))}
-        </tbody>
-        {!grouping.length && (
-          <tfoot>
-            <tr className="bg-[#1f1d1e] text-white font-bold">
-              <td colSpan={columns.length} className="px-4 py-2 border border-slate-200">
-                Total Number of People: {totalNumberOfPeople}
-              </td>
-            </tr>
-          </tfoot>
-        )}
-      </table>
+                    {row.getIsExpanded() && row.subRows.map(subRow => (
+                      <tr key={subRow.id} className={subRow.depth % 2 === 0 ? 'bg-white' : 'bg-slate-100'}>
+                        {subRow.getVisibleCells().map(cell => (
+                          <td key={cell.id} className="px-4 py-2 border border-slate-200">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                    {row.getIsExpanded() && (
+                      <tr className="bg-[#9dc131]">
+                        <td colSpan={row.getVisibleCells().length} className="px-4 py-2 border border-slate-200 font-bold">
+                          Total Number of People: {row.subRows.reduce((sum, subRow) => sum + subRow.original.number_of_people, 0)}
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                ) : (
+                  <tr className={row.depth % 2 === 0 ? 'bg-white' : 'bg-slate-100'}>
+                    {row.getVisibleCells().map(cell => (
+                      <td key={cell.id} className="px-4 py-2 border border-slate-200">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+          {!grouping.length && (
+            <tfoot>
+              <tr className="bg-[#1f1d1e] text-white font-bold">
+                <td colSpan={columns.length} className="px-4 py-2 border border-slate-200">
+                  Total Number of People: {totalNumberOfPeople}
+                </td>
+              </tr>
+            </tfoot>
+          )}
+        </table>
+      </div>
+      <CSVLink
+        data={csvData}
+        filename="table_data.csv"
+        className="mt-4 inline-block px-6 py-2 bg-[#f860b1] text-white font-bold rounded hover:bg-[#9dc131]"
+      >
+        Download CSV
+      </CSVLink>
     </div>
   );
 };

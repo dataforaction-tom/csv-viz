@@ -9,32 +9,30 @@ import sampleData from './assets/SampleData.csv';
 function Dataviz() {
   const [parsedData, setParsedData] = useState([]);
   const [processedData, setProcessedData] = useState({});
+  const [filteredData, setFilteredData] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState('');
   const [showSupabaseData, setShowSupabaseData] = useState(false);
 
   const processDataForCharts = (data) => {
-    console.log("Raw data:", data); // Debugging raw data
-  
     const chartsData = {
       activity: {},
       location: {},
-      date: {}, 
-      activityByLocation: {}, 
+      date: {},
+      activityByLocation: {},
       dateByYear: {},
       dateByMonth: {},
       typeOfInsight: {},
       postcode: {},
-      ageRange: {}
+      ageRange: {},
     };
 
     const dateFormats = ["dd/MM/yyyy", "dd-MM-yyyy", "d/M/yyyy",
     "MM/dd/yyyy", "MM-dd-yyyy", "M/d/yyyy",
     "yyyy/MM/dd", "yyyy-MM-dd", "yyyy/M/d",
     "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss a", "yyyy-MM-dd'T'HH:mm:ss",]; 
-  
+
     data.forEach((item) => {
       const { activity, 'local_authority': location, 'number_of_people': count, date: dateStr, 'type_of_insight': typeOfInsight, 'age_range': ageRange,  } = item;
-      console.log("Date string:", dateStr);
-      console.log('Activity', activity);
 
       let parsedDate;
       let isValidDate = false;
@@ -42,68 +40,51 @@ function Dataviz() {
         parsedDate = parse(dateStr, dateFormat, new Date());
         if (isValid(parsedDate)) {
           isValidDate = true;
-          break; // Break the loop if a valid date is found
+          break;
         }
       }
 
       if (!isValidDate) {
-        console.error('Invalid date format for:', dateStr);
-        return; 
+        return;
       }
 
-      console.log(parsedDate);
-      
-  
-      // Aggregate data for activity
       chartsData.activity[activity] = (chartsData.activity[activity] || 0) + parseInt(count, 10);
-  
-      // Aggregate data for location
       chartsData.location[location] = (chartsData.location[location] || 0) + parseInt(count, 10);
 
-      // Aggregate data for Type of Insight
-      chartsData.typeOfInsight[typeOfInsight] = (chartsData.typeOfInsight[typeOfInsight] || 0) + parseInt(count, 10);
-
-      // Aggregate data for Age Range
-      chartsData.ageRange[ageRange] = (chartsData.ageRange[ageRange] || 0) + parseInt(count, 10);
-  
-      // For month aggregation
-      const yearMonth = format(parsedDate, "yyyy-MM"); // Extracts YYYY-MM for aggregation
+      const yearMonth = format(parsedDate, "yyyy-MM");
       chartsData.dateByMonth[yearMonth] = (chartsData.dateByMonth[yearMonth] || 0) + parseInt(count, 10);
 
-      // For year aggregation
       const year = format(parsedDate, "yyyy");
       chartsData.dateByYear[year] = (chartsData.dateByYear[year] || 0) + parseInt(count, 10);
-  
-      // Aggregate data for activity by location 
+
+      chartsData.typeOfInsight[typeOfInsight] = (chartsData.typeOfInsight[typeOfInsight] || 0) + parseInt(count, 10);
+      chartsData.ageRange[ageRange] = (chartsData.ageRange[ageRange] || 0) + parseInt(count, 10);
+
       if (!chartsData.activityByLocation[activity]) {
         chartsData.activityByLocation[activity] = {};
       }
       chartsData.activityByLocation[activity][location] = (chartsData.activityByLocation[activity][location] || 0) + parseInt(count, 10);
     });
-  
-    console.log("Processed data:", chartsData); // Debugging processed data
+
     return chartsData;
   };
 
   const handleDataParsed = (data) => {
     if (data && data.length > 0) {
       const processedData = processDataForCharts(data);
-      setParsedData(data); // Set raw data for table
-      setProcessedData(processedData); // Set processed data for charts
-    } else {
-      console.log("No data to process.");
+      setParsedData(data);
+      setProcessedData(processedData);
+      setFilteredData(data);
     }
   };
 
   const handleContributeClicked = () => {
-    setShowSupabaseData(true); // Change state to show charts from AllData
+    setShowSupabaseData(true);
   };
 
   return (
     <div className="">
-      <header className="">
-        
-      </header>
+      <header className=""></header>
       <div className='grid grid-cols-1 sm:grid-cols-2 bg-[#1f1d1e]'>
         <div className='flex flex-col items-center h-auto bg-[#1f1d1e] text-white text-pretty pb-6'>
           <h1 className="text-xl font-semibold text-center px-4 text-white pt-6">
@@ -129,8 +110,13 @@ function Dataviz() {
       </div>
       {!showSupabaseData ? (
         <>
-          <Charts data={processedData} />
-          <DataTable data={parsedData} />
+          <Charts data={filteredData} />
+          <DataTable
+            data={parsedData}
+            globalFilter={globalFilter}
+            setGlobalFilter={setGlobalFilter}
+            setFilteredData={setFilteredData}
+          />
         </>
       ) : (
         <AllData />
