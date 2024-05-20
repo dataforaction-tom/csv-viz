@@ -6,6 +6,7 @@ const Journey = () => {
       <iframe
   src="https://insight-infrastructure.super.site/"
   className='w-full h-full'
+  title="Insight Infrastructure journey Notion page"
 ></iframe>
     </div>
   );
