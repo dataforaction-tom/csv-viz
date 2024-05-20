@@ -22,7 +22,7 @@ const Circle = ({ icon, color, text, aboveText, navigateTo }) => {
 
 const Footer = () => {
   return (
-    <div className='pt-10 '>
+    <div className='pt-10'>
       <hr className="border-t-2 border-dotted border-[#f860b1] w-4/5 mx-auto my-4" />
       <div className="mt-4 md:mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 justify-center items-center pb-10 mx-auto">
         <Circle aboveText="Check your knowledge?" icon={<FaCheckCircle />} color="border-[#f860b1]" text="Checklist" navigateTo="/checklist" />
@@ -32,16 +32,16 @@ const Footer = () => {
         <Circle aboveText="Understand the journey?" icon={<GiJourney />} color="border-red-500" text="Journey" navigateTo="/journey" />
       </div>
      
-      <div className="flex justify-between items-center gap-10 p-10 bg-slate-200 border-2 border-pink-500 border-dotted">
-      <p className="text-xl font-semibold">
-        Developed by Data For Action with the Insight Infrastructure team at Joseph Rowntree Foundation
-      </p>
-      <div className="flex items-center space-x-4 sm:space-x-10">
-        <img src={process.env.PUBLIC_URL + "/DataforAction_Logo_offblack_pink.png"} alt="DFALogo" className="h-20" />
-        <img src={process.env.PUBLIC_URL + "/InsightInfrastructurePackage_Logo.svg"} alt="IILogo" className="h-20" />
-        <img src={process.env.PUBLIC_URL + "/JRF_Lock-up_3line.svg"} alt="JRFLogo" className="h-20" />
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-10 p-10 bg-slate-200 border-2 border-pink-500 border-dotted">
+        <p className="text-xl font-semibold text-center sm:text-left">
+          Developed by Data For Action with the Insight Infrastructure team at Joseph Rowntree Foundation
+        </p>
+        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <img src={process.env.PUBLIC_URL + "/DataforAction_Logo_offblack_pink.png"} alt="DFALogo" className="h-20" />
+          <img src={process.env.PUBLIC_URL + "/InsightInfrastructurePackage_Logo.svg"} alt="IILogo" className="h-20" />
+          <img src={process.env.PUBLIC_URL + "/JRF_Lock-up_3line.svg"} alt="JRFLogo" className="h-20" />
+        </div>
       </div>
-    </div>
     </div>
   );
 };
